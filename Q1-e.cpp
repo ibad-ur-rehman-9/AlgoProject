@@ -138,7 +138,27 @@ int main()
          << "  _)  _)|  __  /  \\ |_  /|   /  ||    _)  _)|  __  /  \\   /   /  _)  ||    _)  _)|  __  /  \\ /__  (__) /|" << endl
          << " /__ __)|(     \\__/ __) _|_ /   ||   /__ __)|(     \\__/  /   /  /__  ||   /__ __)|(     \\__/ \\__) (__) _|_" << endl
          << endl;
-    vector<double> list = {2.5, -3, 4, 10, 6};
+    vector<double> list;
+    cout << "Enter atleast 10 points, press -1 for end of points: " << endl;
+    for (int i = 0;; i++)
+    {
+        double input;
+        cin >> input;
+        if (i > 9 && input == -1)
+        {
+            break;
+        }
+        else if (input == -1)
+        {
+            continue;
+        }
+        list.push_back(input);
+    }
+    cout << "Array: " << endl;
+    for (auto i : list)
+    {
+        cout << i << "  ";
+    }
     closestPair c = findClosestPair(list, 0, list.size() - 1);
     cout << "distance: " << c.distance << endl
          << "Pair: ( " << c.number1 << "," << c.number2 << " )" << endl;

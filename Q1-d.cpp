@@ -131,4 +131,35 @@ int main()
     }
     cout << endl
          << endl;
+
+    cout << "Now sort any array of your choice!" << endl;
+    vector<int> inputArr;
+    cout << " Enter atleast 10 array elements,press '-1' for end of array: " << endl;
+    for (int i = 0;; i++)
+    {
+        int input;
+        cin >> input;
+        if (i > 9 && input == -1)
+        {
+            break;
+        }
+        else if (input == -1)
+        {
+            continue;
+        }
+        inputArr.push_back(input);
+    }
+    cout << "Array: " << endl;
+    for (auto i : inputArr)
+    {
+        cout << i << "  ";
+    }
+    quickSort(inputArr, 0, inputArr.size() - 1);
+    cout << "Sorted Array: " << endl;
+    for (auto i : inputArr)
+    {
+        cout << i << "  ";
+    }
+    cout << endl
+         << endl;
 }
