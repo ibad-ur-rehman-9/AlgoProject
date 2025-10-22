@@ -99,8 +99,45 @@ closestPair findClosestPair(vector<double> &numberList, int start, int end)
     return currentBest;
 }
 
+/*
+=>Efficiiency Class?
+This creates a recursion tree with log n levels, and at each level we do O(n) work in the combine step, giving us O(n log n) total time.
+=> IS IT A GOOD ALGORITHM FOR THIS PROBLEM????
+No. Why??
+  for (int i = start; i < middle; i++)
+    { // Every number in left half
+        for (int j = middle; j < end; j++)
+        { // Every number in right half
+            double cross_boundary_distance = findAbsoluteValue(numberList[j] - numberList[i]);
+
+            if (cross_boundary_distance < currentBest.distance)
+            {
+                // Found a better pair that crosses the boundary!
+                currentBest.distance = cross_boundary_distance;
+                currentBest.number1 = numberList[i];
+                currentBest.number2 = numberList[j];
+            }
+        }
+    }
+
+This nested loop checks every possible pair where:
+
+One number comes from the left half
+One number comes from the right half
+
+If any of these cross-boundary pairs are closer than what we found before, we update our answer.
+Why Is This O(n) Work?
+In the worst case, if the left half has n/2 numbers and right half has n/2 numbers, we're doing (n/2) × (n/2) = O(n²) comparisons at each level! This is actually inefficient, which is why this approach isn't optimal for the 1D problem.
+
+*/
+
 int main()
 {
+    cout << endl
+         << " __  __         __   __    ___  ||   __  __         __  ___ ___ __   ||   __  __         __   __   __    " << endl
+         << "  _)  _)|  __  /  \\ |_  /|   /  ||    _)  _)|  __  /  \\   /   /  _)  ||    _)  _)|  __  /  \\ /__  (__) /|" << endl
+         << " /__ __)|(     \\__/ __) _|_ /   ||   /__ __)|(     \\__/  /   /  /__  ||   /__ __)|(     \\__/ \\__) (__) _|_" << endl
+         << endl;
     vector<double> list = {2.5, -3, 4, 10, 6};
     closestPair c = findClosestPair(list, 0, list.size() - 1);
     cout << "distance: " << c.distance << endl
