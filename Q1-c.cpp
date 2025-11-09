@@ -86,6 +86,32 @@ int inversionCount(vector<int> &arr)
 }
 int main()
 {
-    vector<int> arr = {1, 3, 5, 10, 2, 6, 8, 9};
-    cout << inversionCount(arr);
+    cout << endl
+         << " __  __         __   __    ___  ||   __  __         __  ___ ___ __   ||   __  __         __   __   __    " << endl
+         << "  _)  _)|  __  /  \\ |_  /|   /  ||    _)  _)|  __  /  \\   /   /  _)  ||    _)  _)|  __  /  \\ /__  (__) /|" << endl
+         << " /__ __)|(     \\__/ __) _|_ /   ||   /__ __)|(     \\__/  /   /  /__  ||   /__ __)|(     \\__/ \\__) (__) _|_" << endl
+         << endl;
+    vector<int> inputArr;
+    cout << " Enter atleast 10 array elements,press '-1' for end of array: " << endl;
+    for (int i = 0;; i++)
+    {
+        int input;
+        cin >> input;
+        if (i > 9 && input == -1)
+        {
+            break;
+        }
+        else if (input == -1)
+        {
+            continue;
+        }
+        inputArr.push_back(input);
+    }
+    cout << "Array: " << endl;
+    for (auto i : inputArr)
+    {
+        cout << i << "  ";
+    }
+    cout << endl
+         << "Inversion Count: " << inversionCount(inputArr);
 }

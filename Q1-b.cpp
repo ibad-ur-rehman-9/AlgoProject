@@ -63,9 +63,49 @@ T(n) = 2log₂(n)
 
 Hence the number of multiplications made are 2log₂(n) and the time complexity is O(log₂n)
 
+Question 1 part b(3)
+
+Below is the code for finding the exponent of a number through brute force:
 */
 
+int findExponentByBruteForce(int number, int power)
+{
+    if (number == 1) // 1 to any power is always 1 yayy!!
+    {
+        return number;
+    }
+    if (power == 1)
+    {
+        return number;
+    }
+    if (power == 0)
+    {
+        return 1;
+    }
+    int result = 1;
+    while (power != 0)
+    {
+        result *= number;
+        power--;
+    }
+    return result;
+}
+
+/* Divide and Conquer Vs Brute Force
+The divide and Conquer approach takes O(logn) time while the brute force approach takes O(n) time. This make recursive approach better, but we will have to use long or long long it for larger numbers and powers. Also, recursive overhead will be much larger if exponent is huge.
+*/
 int main()
 {
-    cout << findExponent(2, 8);
+    cout << endl
+         << " __  __         __   __    ___  ||   __  __         __  ___ ___ __   ||   __  __         __   __   __    " << endl
+         << "  _)  _)|  __  /  \\ |_  /|   /  ||    _)  _)|  __  /  \\   /   /  _)  ||    _)  _)|  __  /  \\ /__  (__) /|" << endl
+         << " /__ __)|(     \\__/ __) _|_ /   ||   /__ __)|(     \\__/  /   /  /__  ||   /__ __)|(     \\__/ \\__) (__) _|_" << endl
+         << endl;
+
+    int number, power;
+    cout
+        << "Enter number and power: ";
+    cin >> number >> power;
+    cout << "By Divide and Conquer: = " << findExponent(number, power) << endl;
+    cout << "By Brute Force: = " << findExponentByBruteForce(number, power);
 }

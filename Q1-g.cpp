@@ -1,4 +1,4 @@
-#include<iostream>
+#include <iostream>
 #include <vector>
 using namespace std;
 
@@ -8,35 +8,31 @@ struct Result
     int sellDay;
     int profit;
 };
-pair<int, int> maxProfitSplitHelper(vector<int> &prices, int left, int right){
-    int minIndex = left;
-    int maxIndex = left;
-    for (int i = left; i <= right; i++)
-    {
-        if (prices[i] < prices[minIndex])
-            minIndex = i;
-        if (prices[i] > prices[maxIndex])
-            maxIndex = i;
-    }
-    return {minIndex, maxIndex};
-}
 
 Result maxProfitSplit(vector<int> &prices, int left, int right)
 {
     if (left >= right)
-        // return {-1,-1,-1};
-        // return ;
         return {left, right, 0};
 
     int mid = left + (right - left) / 2;
+
     Result leftBest = maxProfitSplit(prices, left, mid);
     Result rightBest = maxProfitSplit(prices, mid + 1, right);
-    // maxProfitSplit(prices, left, mid);
-    // maxProfitSplit(prices, mid + 1, right);
 
-    // (buy in left, sell in right)
-    auto [minLeft, maxLeft] = maxProfitSplitHelper(prices, left, mid);
-    auto [minRight, maxRight] = maxProfitSplitHelper(prices, mid + 1, right);
+    // Cross case: buy in left half, sell in right half
+    int minLeft = left;
+    for (int i = left; i <= mid; i++)
+    {
+        if (prices[i] < prices[minLeft])
+            minLeft = i;
+    }
+
+    int maxRight = mid + 1;
+    for (int i = mid + 1; i <= right; i++)
+    {
+        if (prices[i] > prices[maxRight])
+            maxRight = i;
+    }
 
     int crossProfit = prices[maxRight] - prices[minLeft];
     Result crossResult = {minLeft, maxRight, crossProfit};
@@ -49,9 +45,38 @@ Result maxProfitSplit(vector<int> &prices, int left, int right)
     else
         return crossResult;
 }
-int main(){
-    vector<int> prices = {10,8,12,13,2,4,13,20};
-    Result result = maxProfitSplit(prices, 0, prices.size() - 1);
+
+int main()
+{
+    cout << endl
+         << " __  __         __   __    ___  ||   __  __         __  ___ ___ __   ||   __  __         __   __   __    " << endl
+         << "  _)  _)|  __  /  \\ |_  /|   /  ||    _)  _)|  __  /  \\   /   /  _)  ||    _)  _)|  __  /  \\ /__  (__) /|" << endl
+         << " /__ __)|(     \\__/ __) _|_ /   ||   /__ __)|(     \\__/  /   /  /__  ||   /__ __)|(     \\__/ \\__) (__) _|_" << endl
+         << endl;
+    vector<int> inputArr;
+    cout << " Enter atleast 10 price array,press '-1' for end of array: " << endl;
+    for (int i = 0;; i++)
+    {
+        int input;
+        cin >> input;
+        if (i > 9 && input == -1)
+        {
+            break;
+        }
+        else if (input == -1)
+        {
+            continue;
+        }
+        inputArr.push_back(input);
+    }
+    cout << "Prices: " << endl;
+    for (auto i : inputArr)
+    {
+        cout << i << "  ";
+    }
+
+    Result result = maxProfitSplit(inputArr, 0, inputArr.size() - 1);
+
     if (result.profit > 0)
     {
         cout << "Buy on day " << result.buyDay + 1 << ", sell on day " << result.sellDay + 1 << endl;

@@ -7,6 +7,7 @@ struct holdMinMax
 {
     int min;
     int max;
+    int comparisons;
 };
 
 /* QUESTION 1 -> part a(1) */
@@ -76,41 +77,34 @@ Continuing this pattern:
 
 
 For n = 8:
-```
-                 Level 0: [8 elements]
-                          ↓ 2 comparisons
-                 /                    \
-      Level 1: [4 elem]              [4 elem]
-                ↓ 2 comp              ↓ 2 comp
-              /        \            /        \
-   Level 2: [2]       [2]        [2]       [2]
-            ↓1 comp   ↓1 comp    ↓1 comp   ↓1 comp
-
+             Level 0: [8 elements]
+                      ↓ 2 comparisons
+             /                    \
+  Level 1: [4 elem]              [4 elem]
+            ↓ 2 comp              ↓ 2 comp
+          /        \            /        \
+Level 2: [2]       [2]        [2]       [2]
+↓1 comp   ↓1 comp    ↓1 comp   ↓1 comp
 Total comparisons:
-- Level 2: 4 comparisons (base cases)
-- Level 1: 4 comparisons (combining)
-- Level 0: 2 comparisons (final combine)
+
+Level 2: 4 comparisons (base cases)
+Level 1: 4 comparisons (combining)
+Level 0: 2 comparisons (final combine)
 Total: 10 comparisons
 
 Using formula: (3×8/2) - 2 = 12 - 2 = 10 ✓
 Writing code below for counting the number of comparisions...
 */
-
-int comparisions;
-void initializeNumberOfComparions()
-{
-    comparisions = 0;
-}
-int findNumberOfComparisionsDAC(vector<int> &arr, int left, int right) // DAC = Divide and Conquer
+holdMinMax findNumberOfComparisionsDAC(vector<int> &arr, int left, int right)
 {
     holdMinMax result;
-
     // Base Case 1 : Only one element
     if (left == right)
     {
         result.min = arr[left];
         result.max = arr[right];
-        return comparisions;
+        result.comparisons = 0;
+        return result;
     }
 
     // Base Case 2: Two elements
@@ -120,56 +114,49 @@ int findNumberOfComparisionsDAC(vector<int> &arr, int left, int right) // DAC = 
         {
             result.min = arr[left];
             result.max = arr[right];
-            return ++comparisions;
         }
         else
         {
             result.min = arr[right];
             result.max = arr[left];
-            return ++comparisions;
         }
+        result.comparisons = 1;
+        return result;
     }
 
     int mid = left + (right - left) / 2;
 
-    holdMinMax leftResult = findMinMax(arr, left, mid);
-    holdMinMax rightResult = findMinMax(arr, mid + 1, right);
+    holdMinMax leftResult = findNumberOfComparisionsDAC(arr, left, mid);
+    holdMinMax rightResult = findNumberOfComparisionsDAC(arr, mid + 1, right);
 
-    ++comparisions;
     result.min = leftResult.min < rightResult.min ? leftResult.min : rightResult.min;
-    ++comparisions;
     result.max = leftResult.max > rightResult.max ? leftResult.max : rightResult.max;
+    result.comparisons = leftResult.comparisons + rightResult.comparisons + 2;
 
-    return comparisions;
+    return result;
 }
-
 /* QUESTION 1 -> part a(3)
-
 The brute force approach makes approximately 2n comparisions. However, divide and conquer approach takes approx (3n/2 i.e 1.5n) comparisons. So we get 25% less comparisions using the divide and conquer approach.
-
 Below is the code for counting the number of comparisions using Brute Force Approach as well.
-
 */
-
 int findNumberOfComparisionsBFA(vector<int> &arr)
 {
+    int comparisons = 0;
     int min = arr[0], max = arr[0];
     for (int i = 1; i < arr.size(); i++)
     {
         if (arr[i] < min)
             min = arr[i];
-        ++comparisions;
+        ++comparisons;
         if (arr[i] > max)
             max = arr[i];
-        ++comparisions;
+        ++comparisons;
     }
-    return comparisions;
+    return comparisons;
     // Total = 2(n-1) = 2n-2 comparisions.
 }
-
 int main()
 {
-
     cout << endl
          << "                  __                                                                                      " << endl
          << "|\\/|. _ |\\/| _   |_. _  _| _ _                                                                           " << endl
@@ -216,14 +203,12 @@ int main()
         }
         case 2:
         {
-            initializeNumberOfComparions();
-            int numberOfComparisionsDAC = findNumberOfComparisionsDAC(inputArr, 0, inputArr.size() - 1);
-            cout << "Number of Comparisions: " << numberOfComparisionsDAC << endl;
+            holdMinMax res = findNumberOfComparisionsDAC(inputArr, 0, inputArr.size() - 1);
+            cout << "Number of Comparisions: " << res.comparisons << endl;
             break;
         }
         case 3:
         {
-            initializeNumberOfComparions();
             int numberOfComparisionsBFA = findNumberOfComparisionsBFA(inputArr);
             cout << "Number of Comparisions: " << numberOfComparisionsBFA << endl;
             break;
@@ -234,4 +219,3 @@ int main()
         }
         }
     }
-}
