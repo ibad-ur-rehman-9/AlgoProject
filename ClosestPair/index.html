@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Closest Pair Visualization</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        
+        .controls {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        label {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        select {
+            padding: 8px 12px;
+            font-size: 14px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+        }
+        
+        select:hover {
+            border-color: #999;
+        }
+        
+        canvas {
+            border: 1px solid #333;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .info {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: white;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <label for="fileSelect">Choose Input File:</label>
+        <select id="fileSelect">
+            <option value="points1.json">File 1 - Random Uniform (100 points)</option>
+            <option value="points2.json">File 2 - Clustered (110 points)</option>
+            <option value="points3.json">File 3 - Linear Pattern (120 points)</option>
+            <option value="points4.json">File 4 - Circular (100 points)</option>
+            <option value="points5.json">File 5 - Grid Pattern (121 points)</option>
+            <option value="points6.json">File 6 - Dense Center (130 points)</option>
+            <option value="points7.json">File 7 - Two Close Clusters (140 points)</option>
+            <option value="points8.json">File 8 - Diagonal Stripe (150 points)</option>
+            <option value="points9.json">File 9 - Corner Clusters (100 points)</option>
+            <option value="points10.json">File 10 - Mixed with Close Pairs (160 points)</option>
+        </select>
+    </div>
+    
+    <div id="canvas-container"></div>
+    
+    <div class="info">
+        Use Previous/Next buttons to step through the algorithm visualization
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+    <script src="sketch.js"></script>
+</body>
+</html>
