@@ -1,2 +1,2 @@
 # AlgoProject
-This repositoy has been created for our Algortighms Project.
+This repositoy has been created for our Algorithms Project.
